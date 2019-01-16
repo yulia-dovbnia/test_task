@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class SearchPageTest {
     private final WebDriver webDriver = new DriverFactory().getDriver();
-    private final int yearToCheck = 2005;
+    private final int yearToCheck = 2015;
 
     @Test
     public void yearFilterTest() {

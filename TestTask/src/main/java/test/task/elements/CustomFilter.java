@@ -16,7 +16,7 @@ public class CustomFilter extends Element {
         WebElement element = webDriver.findElement(By.xpath(xpath));
         if (!element.getAttribute("class").contains("open")) {
             element.click();
-            Waiting.waitForPageLoaded(webDriver);
+            Waiting.waitForPageLoaded(webDriver, false);
         }
     }
 }

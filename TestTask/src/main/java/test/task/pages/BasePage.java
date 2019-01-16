@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class BasePage<T extends BasePage<T>> {
 
-    final String  baseURL ="https://www.autohero.com";
+    final String baseURL = "https://www.autohero.com";
 
     WebDriver webDriver;
 
