@@ -3,7 +3,7 @@ package test.task.driver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
-import test.task.elements.SimpleElement;
+import test.task.elements.Element;
 import test.task.pages.SearchPage;
 
 import java.time.Duration;
@@ -24,7 +24,7 @@ public class Waiting {
     }
 
     private static void waitForLoadingBanner(WebDriver webDriver, FluentWait webDriverFluentWait) {
-        SimpleElement element = new SearchPage(webDriver).loadingBanner;
+        Element element = new SearchPage(webDriver).loadingBanner;
         webDriverFluentWait.until(condition -> element.getElements().size() > 0);
         webDriverFluentWait.until(condition -> element.getElements().size() == 0);
     }

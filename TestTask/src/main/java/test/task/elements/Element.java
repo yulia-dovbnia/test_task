@@ -6,9 +6,14 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-abstract class Element {
-    WebDriver webDriver;
-    String xpath;
+public class Element {
+    protected WebDriver webDriver;
+    protected String xpath;
+
+    public Element(WebDriver webDriver, String xpath) {
+        this.webDriver = webDriver;
+        this.xpath = xpath;
+    }
 
     public WebElement getElement() {
         return webDriver.findElement(By.xpath(xpath));

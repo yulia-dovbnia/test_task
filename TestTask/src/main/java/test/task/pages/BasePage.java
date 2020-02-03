@@ -1,10 +1,12 @@
 package test.task.pages;
 
 import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Value;
 
 public abstract class BasePage<T extends BasePage<T>> {
 
-    final String baseURL = "https://www.autohero.com";
+    @Value("${host}")
+    protected String baseURL;
 
     WebDriver webDriver;
 

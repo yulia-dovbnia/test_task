@@ -7,8 +7,7 @@ import test.task.driver.Waiting;
 
 public class CustomSelect extends Element {
     public CustomSelect(WebDriver webDriver, String xpath) {
-        this.webDriver = webDriver;
-        this.xpath = xpath;
+        super(webDriver, xpath);
     }
 
     private void selectByAttribute(String attributeName, String attributeValue) {

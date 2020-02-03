@@ -1,10 +1,8 @@
 package test.task.smoke;
 
-import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import test.task.driver.DriverFactory;
-import test.task.elements.ProductItemFactory;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import test.task.AbstractTest;
 import test.task.pages.SearchPage;
 
 import java.util.Comparator;
@@ -12,35 +10,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class SearchPageTest {
-    private final WebDriver webDriver = new DriverFactory().getDriver();
+public class SearchPageTest extends AbstractTest {
     private final int yearToCheck = 2015;
+
+    @Autowired
+    SearchPage searchPage;
 
     @Test
     public void yearFilterTest() {
-        SearchPage searchPage = new SearchPage(webDriver).open();
-        searchPage.closePopupIfPresent();
+        searchPage.open();
 
         searchPage.filterYear.openIfClosed();
         searchPage.selectYear.selectByVisibleText(String.valueOf(yearToCheck));
         searchPage.selectSort.selectByAttribute("offerPrice.amountMinorUnits.desc");
 
-        List<Integer> yearsList = ProductItemFactory.getList(webDriver)
+        List<Integer> yearsList = searchPage.getProductInfoList()
                 .stream()
                 .map(productData -> Integer.valueOf(productData.getYear()))
                 .collect(Collectors.toList());
-        List<Double> pricesList = ProductItemFactory.getList(webDriver)
+        List<Double> pricesList = searchPage.getProductInfoList()
                 .stream()
                 .map(productData -> Double.valueOf(productData.getPrice()))
                 .collect(Collectors.toList());
 
 
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(pricesList).as("Check price is descending").isSortedAccordingTo(Comparator.reverseOrder());
+        softAssertions.assertThat(pricesList).as("Check price is descending").isSortedAccordingTo(Comparator.reverseOrder());
 
-        yearsList.forEach(year -> softly.assertThat(year >= yearToCheck)
+        yearsList.forEach(year -> softAssertions.assertThat(year >= yearToCheck)
                 .as("Year is less than " + yearToCheck + ". Actual = " + year)
                 .isTrue());
-        softly.assertAll();
     }
 }

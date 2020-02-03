@@ -8,8 +8,7 @@ import test.task.driver.Waiting;
 public class CustomFilter extends Element {
 
     public CustomFilter(WebDriver webDriver, String xpath) {
-        this.xpath = xpath;
-        this.webDriver = webDriver;
+        super(webDriver, xpath);
     }
 
     public void openIfClosed() {
