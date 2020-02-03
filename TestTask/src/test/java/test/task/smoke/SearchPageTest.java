@@ -1,5 +1,6 @@
 package test.task.smoke;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import test.task.AbstractTest;
@@ -9,7 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public class SearchPageTest extends AbstractTest {
     private final int yearToCheck = 2015;
 
@@ -17,6 +17,7 @@ public class SearchPageTest extends AbstractTest {
     SearchPage searchPage;
 
     @Test
+    @DisplayName("Technical task: open page, select year, soft desc -> verify sorting and filtering")
     public void yearFilterTest() {
         searchPage.open();
 

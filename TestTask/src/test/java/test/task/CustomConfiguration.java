@@ -1,5 +1,6 @@
 package test.task;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,7 +22,7 @@ public class CustomConfiguration {
 
     @Bean
     public WebDriver chromeDriver() {
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/drivers/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
         WebDriver webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         return webDriver;

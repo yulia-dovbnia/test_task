@@ -11,7 +11,7 @@ public class CustomSelect extends Element {
     }
 
     private void selectByAttribute(String attributeName, String attributeValue) {
-        getElement().findElement(By.xpath("./option[@" + attributeName + "='" + attributeValue + "']")).click();
+        getElement().findElement(By.xpath(String.format("./option[@%s='%s']", attributeName, attributeValue))).click();
         Waiting.waitForPageLoaded(webDriver, true);
     }
 
