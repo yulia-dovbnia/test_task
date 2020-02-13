@@ -4,15 +4,19 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @Configuration
 @ComponentScan(basePackages = {"test.task"})
-@PropertySource("classpath:${spring.profile.active}.properties")
+@PropertySources({
+        @PropertySource("classpath:${spring.profile.active}.properties")
+})
 public class CustomConfiguration {
 
     @Bean
@@ -21,7 +25,20 @@ public class CustomConfiguration {
     }
 
     @Bean
-    public WebDriver chromeDriver() {
+    public WebDriver chromeDriver() throws MalformedURLException {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("chrome");
+        capabilities.setVersion("80.0");
+        capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVideo", true);
+        WebDriver webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+        webDriver.manage().window().maximize();
+        return webDriver;
+    }
+
+    @Bean
+    @Profile("debug")
+    public WebDriver chromeDriverLocal() {
         WebDriverManager.chromedriver().setup();
         WebDriver webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
