@@ -23,13 +23,13 @@ public class Waiting {
         waitForReadyState(webDriver, webDriverFluentWait);
     }
 
-    private static void waitForLoadingBanner(WebDriver webDriver, FluentWait webDriverFluentWait) {
+    private static void waitForLoadingBanner(WebDriver webDriver, FluentWait<WebDriver> webDriverFluentWait) {
         Element element = new SearchPage(webDriver).loadingBanner;
         webDriverFluentWait.until(condition -> element.getElements().size() > 0);
         webDriverFluentWait.until(condition -> element.getElements().size() == 0);
     }
 
-    private static void waitForReadyState(WebDriver webDriver, FluentWait webDriverFluentWait) {
+    private static void waitForReadyState(WebDriver webDriver, FluentWait<WebDriver> webDriverFluentWait) {
         webDriverFluentWait.until(condition -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     }
 }
