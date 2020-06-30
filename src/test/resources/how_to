@@ -1,0 +1,17 @@
+1) Download file
+2) From that folder run
+cm_windows_amd64.exe selenoid start
+cm_windows_amd64.exe selenoid-ui start
+
+Tests Endpoint
+http://localhost:4444/wd/hub
+
+Current Selenoid Status
+http://localhost:4444/status
+
+UI Default URL
+http://localhost:8080/
+
+
+docker pull selenoid/chrome:80.0
+docker pull selenoid/video-recorder:latest-release
