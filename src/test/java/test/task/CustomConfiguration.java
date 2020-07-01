@@ -25,6 +25,7 @@ public class CustomConfiguration {
     }
 
     @Bean
+    @Profile("selenoid")
     public WebDriver chromeDriver() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
@@ -37,7 +38,6 @@ public class CustomConfiguration {
     }
 
     @Bean
-    @Profile("debug")
     public WebDriver chromeDriverLocal() {
         WebDriverManager.chromedriver().setup();
         WebDriver webDriver = new ChromeDriver();
