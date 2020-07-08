@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import test.task.AbstractTest;
+import test.task.elements.data.ProductDataItem;
 import test.task.pages.SearchPage;
 
 import java.util.Comparator;
@@ -21,16 +22,15 @@ public class SearchPageTest extends AbstractTest {
     public void yearFilterTest() {
         searchPage.open();
 
-        searchPage.filterYear.openIfClosed();
-        searchPage.selectYear.selectByVisibleText(String.valueOf(yearToCheck));
-        searchPage.selectSort.selectByAttribute("offerPrice.amountMinorUnits.desc");
+        searchPage.openFilterYearIfClosed();
+        searchPage.selectYear(String.valueOf(yearToCheck));
+        searchPage.sortDescending();
 
-        List<Integer> yearsList = searchPage.getProductInfoList()
-                .stream()
+        List<ProductDataItem> productInfoList = searchPage.getProductInfoList();
+        List<Integer> yearsList = productInfoList.stream()
                 .map(productData -> Integer.valueOf(productData.getYear()))
                 .collect(Collectors.toList());
-        List<Double> pricesList = searchPage.getProductInfoList()
-                .stream()
+        List<Double> pricesList = productInfoList.stream()
                 .map(productData -> Double.valueOf(productData.getPrice()))
                 .collect(Collectors.toList());
 
