@@ -1,5 +1,7 @@
 package test.task;
 
+import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +10,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import test.task.logger.AllureSelenide;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,6 +45,9 @@ public class CustomConfiguration {
         WebDriverManager.chromedriver().setup();
         WebDriver webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
+        WebDriverRunner.setWebDriver(webDriver);
+//        SelenideLogger.addListener("AllureSelenide", new io.qameta.allure.selenide.AllureSelenide().screenshots(true).savePageSource(true));
+        SelenideLogger.addListener("Custom", new AllureSelenide().screenshots(true).savePageSource(true));
         return webDriver;
     }
 

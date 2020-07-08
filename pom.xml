@@ -12,13 +12,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <junit.version>5.4.0</junit.version>
         <selenium-version>3.141.59</selenium-version>
         <spring.version>5.1.4.RELEASE</spring.version>
         <junit-platform-surefire-provider.version>1.1.0</junit-platform-surefire-provider.version>
-        <allure-junit5.version>2.10.0</allure-junit5.version>
+        <allure.version>2.10.0</allure.version>
+        <aspectj.version>1.9.5</aspectj.version>
     </properties>
 
 
@@ -58,6 +59,18 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
             <version>${selenium-version}</version>
+        </dependency>
+
+        <!-- Selenide -->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>5.12.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-selenide</artifactId>
+            <version>${allure.version}</version>
         </dependency>
 
         <dependency>
@@ -104,22 +117,22 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit-platform</artifactId>
-            <version>${allure-junit5.version}</version>
+            <version>${allure.version}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
-            <version>${allure-junit5.version}</version>
+            <version>${allure.version}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-attachments</artifactId>
-            <version>${allure-junit5.version}</version>
+            <version>${allure.version}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-rest-assured</artifactId>
-            <version>${allure-junit5.version}</version>
+            <version>${allure.version}</version>
         </dependency>
 
     </dependencies>
@@ -140,23 +153,22 @@
                         </dependency>
                     </dependencies>
                     <configuration>
-                        <properties>
+                        <testFailureIgnore>false</testFailureIgnore>
+                        <argLine>
+                            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        </argLine>
+                        <systemProperties>
                             <property>
-                                <name>listener</name>
-                                <value>io.qameta.allure.junit5.AllureJunit5</value>
+                                <name>allure.results.directory</name>
+                                <value>${project.build.directory}/allure-results</value>
                             </property>
-                        </properties>
-                        <systemPropertyVariables>
-                            <allure.results.directory>${project.build.directory}\allure-results
-                            </allure.results.directory>
-                        </systemPropertyVariables>
+                        </systemProperties>
                     </configuration>
                 </plugin>
-
                 <plugin>
                     <groupId>io.qameta.allure</groupId>
                     <artifactId>allure-maven</artifactId>
-                    <version>2.9</version>
+                    <version>${allure.version}</version>
                 </plugin>
 
             </plugins>
